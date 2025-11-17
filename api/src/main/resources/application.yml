@@ -1,2 +1,36 @@
-spring.application.name: employee-api
-server.port: 8111
+spring:
+  application:
+    name: employee-api
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: NON_NULL
+
+server:
+  port: 8111
+
+# Mock server configuration
+app:
+  mock-server:
+    base-url: http://localhost:8112/api/v1
+  pagination:
+    cache-ttl-minutes: 5  # Cache TTL for Smart Snapshot Pattern
+    default-page-size: 20 # Default page size when not specified
+    max-page-size: 100    # Maximum allowed page size
+
+# Logging configuration
+logging:
+  level:
+    com.reliaquest.api: INFO
+    org.springframework.retry: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Management endpoints for monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
